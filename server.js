@@ -21,21 +21,16 @@ app.use( session( {secret: 'codingdojorocks'} ) )
 
 // root route to render the index.ejs view
 app.get('/', function(req, res) {
-    // if ( !req.session.counter )
-    //     req.session.counter = 0;
-    // req.session.counter ++;
-    // console.log( "SESSION", req.session.counter )
     res.render( "index" );
 })
 
 app.post('/surveys/create', function(req, res) {
-    req.session.counter += 1;
+    req.session.survey = req.body
     res.redirect('/surveys/show');
 })
 
 app.get('/surveys/show', function(req, res) {
-    req.session.counter = 0;
-    res.redirect('/');
+    res.render('survey', {survey: req.session.survey});
 })
 
 // tell the express app to listen on port 8000
